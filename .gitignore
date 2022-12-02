@@ -1,0 +1,11 @@
+﻿clustering_results
+datasets
+generate_datasets/.idea
+k_means_clustering/.idea
+k_means_clustering/cmake-build-wsl
+k_means_clustering/cmake-build-debug
+paper/KMeansClustering.aux
+paper/KMeansClustering.bbl
+paper/KMeansClustering.blg
+paper/KMeansClustering.log
+paper/KMeansClustering.synctex.gz
