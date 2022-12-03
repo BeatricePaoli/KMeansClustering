@@ -105,10 +105,6 @@ std::vector<Cluster> kMeansClustering(int k, std::vector<Point> &points, int max
                     updateStopped = false;
                 }
 
-//                printf("%d", currentMinClusterId);
-//
-//#pragma omp critical
-//                clusters[currentMinClusterId].addPoint(point);
             }
 
             // Update
