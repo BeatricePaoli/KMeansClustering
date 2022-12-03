@@ -6,6 +6,7 @@ std::string datasetsDirectory = "./../datasets/";
 std::string clusteringResultsDirectory = "./../clustering_results/";
 
 int n = 1;
+int k = 4;
 
 int main() {
 
@@ -23,7 +24,7 @@ int main() {
 
             double start = omp_get_wtime();
             for (int i = 0; i < n; i++) {
-                clusters = kMeansClustering(4, points);
+                clusters = kMeansClustering(k, points);
             }
             double end = omp_get_wtime();
             double time = (end - start) / n;
@@ -31,6 +32,7 @@ int main() {
         }
 
 //        writeClustersToCsv(clusters, clusteringResultsDirectory + filename, ',');
+//        writePointsToCsv(points, clusteringResultsDirectory + filename, ',');
     }
 
     return 0;

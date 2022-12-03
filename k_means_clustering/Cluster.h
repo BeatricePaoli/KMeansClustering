@@ -14,11 +14,11 @@ public:
 
     int id;
     Point centroid;
-    std::vector<Point> points;
 
 private:
     float tempSumX;
     float tempSumY;
+    int size;
 };
 
 #endif //K_MEANS_CLUSTERING_CLUSTER_H

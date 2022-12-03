@@ -5,18 +5,19 @@ Cluster::Cluster(int idVal, Point centr) {
     this->centroid = centr;
     this->tempSumX = 0;
     this->tempSumY = 0;
+    this->size = 0;
 }
 
 void Cluster::addPoint(Point *point) {
-    this->points.push_back(*point);
     this->tempSumX += point->x;
     this->tempSumY += point->y;
+    this->size++;
 }
 
 void Cluster::updateCentroid() {
-    int clusterSize = this->points.size();
-    this->centroid.x = this->tempSumX / clusterSize;
-    this->centroid.y = this->tempSumY / clusterSize;
+    this->centroid.x = this->tempSumX / this->size;
+    this->centroid.y = this->tempSumY / this->size;
     this->tempSumX = 0;
     this->tempSumY = 0;
+    this->size = 0;
 }

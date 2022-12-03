@@ -7,6 +7,7 @@
 
 std::vector<std::string> getDatasetFilenames(const std::string& datasetsDirectory);
 std::vector<Point> readPointsFromCsv(const std::string& filename, char delimiter);
-void writeClustersToCsv(const std::vector<Cluster>& clusters, const std::string& filename, char delimiter);
+//void writeClustersToCsv(const std::vector<Cluster>& clusters, const std::string& filename, char delimiter);
+void writePointsToCsv(const std::vector<Point> &points, const std::string &filename, char delimiter);
 
 #endif //K_MEANS_CLUSTERING_UTILS_H

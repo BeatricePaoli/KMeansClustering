@@ -46,13 +46,23 @@ std::vector<Point> readPointsFromCsv(const std::string &filename, char delimiter
     return points;
 }
 
-void writeClustersToCsv(const std::vector<Cluster> &clusters, const std::string &filename, char delimiter) {
+//void writeClustersToCsv(const std::vector<Cluster> &clusters, const std::string &filename, char delimiter) {
+//    std::fstream file(filename, std::ios::out);
+//    if (file.is_open()) {
+//        for (const auto &cluster: clusters) {
+//            for (auto point: cluster.points) {
+//                file << point.x << delimiter << point.y << delimiter << cluster.id << delimiter << cluster.centroid.x << delimiter << cluster.centroid.y << '\n';
+//            }
+//        }
+//    } else
+//        std::cout << "Could not open the file\n" << std::endl;
+//}
+
+void writePointsToCsv(const std::vector<Point> &points, const std::string &filename, char delimiter) {
     std::fstream file(filename, std::ios::out);
     if (file.is_open()) {
-        for (const auto &cluster: clusters) {
-            for (auto point: cluster.points) {
-                file << point.x << delimiter << point.y << delimiter << cluster.id << delimiter << cluster.centroid.x << delimiter << cluster.centroid.y << '\n';
-            }
+        for (auto point: points) {
+            file << point.x << delimiter << point.y << delimiter << point.clusterId << '\n';
         }
     } else
         std::cout << "Could not open the file\n" << std::endl;

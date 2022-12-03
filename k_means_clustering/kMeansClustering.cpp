@@ -78,11 +78,6 @@ std::vector<Cluster> kMeansClustering(int k, std::vector<Point> &points, int max
         // Reset flag
         updateStopped = true;
 
-        // Reset lists
-        for (int i = 0; i < clusters.size(); i++) {
-            clusters[i].points.clear();
-        }
-
 #pragma omp parallel default(none) firstprivate(pointsSize, clusterSize) shared(updateStopped, points, clusters)
         {
             // Assignment
