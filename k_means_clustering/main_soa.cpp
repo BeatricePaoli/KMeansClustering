@@ -17,10 +17,10 @@ int main() {
 
     for (const auto& filename : datasetsFilenames) {
         std::cout << "Reading csv" << std::endl;
-        std::vector<Point> points = readPointsFromCsv(datasetsDirectory + filename, ',');
+        Points points = readPointsStructFromCsv(datasetsDirectory + filename, ',');
         std::cout << "Reading csv finished" << std::endl;
 
-        std::vector<Cluster> clusters;
+        Clusters clusters;
 
         for (int t = min_t; t < max_t_ex; t++) {
             omp_set_num_threads(t);
@@ -31,11 +31,10 @@ int main() {
             }
             double end = omp_get_wtime();
             double time = (end - start) / n;
-            std::cout << "Total time for file " << filename << ": " << time << " s with " << t << " threads and " << clusters.size() << " clusters" << std::endl;
+            std::cout << "Total time for file " << filename << ": " << time << " s with " << t << " threads and " << clusters.size << " clusters" << std::endl;
         }
 
-//        writeClustersToCsv(clusters, clusteringResultsDirectory + filename, ',');
-//        writePointsToCsv(points, clusteringResultsDirectory + filename, ',');
+//        writePointsStructToCsv(points, clusteringResultsDirectory + filename, ',');
     }
 
     return 0;

@@ -3,7 +3,10 @@
 
 #include <vector>
 #include "Cluster.h"
+#include "Clusters.h"
+#include "Points.h"
 
-std::vector<Cluster> kMeansClustering(int k, std::vector<Point>& points, int maxIters = 20);
+std::vector<Cluster> kMeansClustering(int k, std::vector<Point> &points, int maxIters = 20);
+Clusters kMeansClustering(int k, Points &points, int maxIters = 20);
 
 #endif //K_MEANS_CLUSTERING_KMEANSCLUSTERING_H

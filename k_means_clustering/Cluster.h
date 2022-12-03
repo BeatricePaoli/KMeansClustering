@@ -1,8 +1,6 @@
 #ifndef K_MEANS_CLUSTERING_CLUSTER_H
 #define K_MEANS_CLUSTERING_CLUSTER_H
 
-#include <vector>
-#include <omp.h>
 #include "Point.h"
 
 class Cluster {

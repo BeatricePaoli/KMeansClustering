@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <sstream>
 #include <filesystem>
 #include <algorithm>
 #include "utils.h"
@@ -19,6 +18,8 @@ std::vector<std::string> getDatasetFilenames(const std::string& datasetsDirector
     std::sort(datasetsFilenames.begin(), datasetsFilenames.end());
     return datasetsFilenames;
 }
+
+// ---------------------------------- AoS --------------------------- //
 
 std::vector<Point> readPointsFromCsv(const std::string &filename, char delimiter) {
     std::vector<Point> points;
@@ -63,6 +64,47 @@ void writePointsToCsv(const std::vector<Point> &points, const std::string &filen
     if (file.is_open()) {
         for (auto point: points) {
             file << point.x << delimiter << point.y << delimiter << point.clusterId << '\n';
+        }
+    } else
+        std::cout << "Could not open the file\n" << std::endl;
+}
+
+// ---------------------------------- SoA --------------------------- //
+
+Points readPointsStructFromCsv(const std::string& filename, char delimiter) {
+    Points points;
+    std::vector<float> row;
+    std::string line, word;
+
+    std::fstream file(filename, std::ios::in);
+    if (file.is_open()) {
+        while (getline(file, line)) {
+            row.clear();
+            std::stringstream str(line);
+
+            while (getline(str, word, delimiter))
+                try {
+                    row.push_back(std::stof(word));
+                } catch (...) {
+                    std::cout << "Unable to convert csv values to float" << std::endl;
+                }
+            if (row.size() >= 2) {
+                points.size++;
+                points.x.push_back(row[0]);
+                points.y.push_back(row[1]);
+                points.clusterId.push_back(-1);
+            }
+        }
+    } else
+        std::cout << "Could not open the file\n" << std::endl;
+    return points;
+}
+
+void writePointsStructToCsv(const Points &points, const std::string &filename, char delimiter) {
+    std::fstream file(filename, std::ios::out);
+    if (file.is_open()) {
+        for (int i = 0; i < points.size; i++) {
+            file << points.x[i] << delimiter << points.y[i] << delimiter << points.clusterId[i] << '\n';
         }
     } else
         std::cout << "Could not open the file\n" << std::endl;
