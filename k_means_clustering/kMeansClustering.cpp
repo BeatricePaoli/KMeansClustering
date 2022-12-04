@@ -34,22 +34,25 @@ std::vector<Cluster> kMeansPlusPlusInit(int k, std::vector<Point> &points) {
     for (int i = 1; i < k; i++) {
         std::vector<float> minDists(points.size(), 0.0);
         float minDistsSum = 0;
-//#pragma omp parallel for reduction(+:minDistsSum) default(none) shared(points, minDists, centroids)
-        for (int j = 0; j < points.size(); j++) {
-            float currentMinDist = std::numeric_limits<float>::max();
-            for (int z = 0; z < centroids.size(); z++) {
-                float dist = points[j].dist(centroids[z]);
-                if (dist < currentMinDist) {
-                    currentMinDist = dist;
+#pragma omp parallel default(none) shared(points, minDists, centroids, minDistsSum)
+        {
+#pragma omp for reduction(+:minDistsSum)
+            for (int j = 0; j < points.size(); j++) {
+                float currentMinDist = std::numeric_limits<float>::max();
+                for (int z = 0; z < centroids.size(); z++) {
+                    float dist = points[j].dist(centroids[z]);
+                    if (dist < currentMinDist) {
+                        currentMinDist = dist;
+                    }
                 }
+                minDists[j] = currentMinDist;
+                minDistsSum += currentMinDist;
             }
-            minDists[j] = currentMinDist;
-            minDistsSum += currentMinDist;
-        }
 
-//#pragma omp for simd
-        for (int j = 0; j < minDists.size(); j++) {
-            minDists[j] /= minDistsSum;
+#pragma omp for
+            for (int j = 0; j < minDists.size(); j++) {
+                minDists[j] /= minDistsSum;
+            }
         }
 
         std::discrete_distribution<int> distribution(minDists.begin(), minDists.end());
