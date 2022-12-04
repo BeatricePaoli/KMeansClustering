@@ -43,7 +43,7 @@ std::vector<Point> readPointsFromCsv(const std::string &filename, char delimiter
             }
         }
     } else
-        std::cout << "Could not open the file\n" << std::endl;
+        std::cout << "Could not open the file" << std::endl;
     return points;
 }
 
@@ -56,7 +56,7 @@ std::vector<Point> readPointsFromCsv(const std::string &filename, char delimiter
 //            }
 //        }
 //    } else
-//        std::cout << "Could not open the file\n" << std::endl;
+//        std::cout << "Could not open the file" << std::endl;
 //}
 
 void writePointsToCsv(const std::vector<Point> &points, const std::string &filename, char delimiter) {
@@ -96,7 +96,7 @@ Points readPointsStructFromCsv(const std::string& filename, char delimiter) {
             }
         }
     } else
-        std::cout << "Could not open the file\n" << std::endl;
+        std::cout << "Could not open the file" << std::endl;
     return points;
 }
 
@@ -107,5 +107,5 @@ void writePointsStructToCsv(const Points &points, const std::string &filename, c
             file << points.x[i] << delimiter << points.y[i] << delimiter << points.clusterId[i] << '\n';
         }
     } else
-        std::cout << "Could not open the file\n" << std::endl;
+        std::cout << "Could not open the file" << std::endl;
 }
