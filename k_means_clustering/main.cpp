@@ -34,7 +34,6 @@ int main() {
             std::cout << "Total time for file " << filename << ": " << time << " s with " << t << " threads and " << clusters.size() << " clusters" << std::endl;
         }
 
-//        writeClustersToCsv(clusters, clusteringResultsDirectory + filename, ',');
 //        writePointsToCsv(points, clusteringResultsDirectory + filename, ',');
     }
 
