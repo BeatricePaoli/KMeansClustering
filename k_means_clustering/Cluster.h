@@ -7,7 +7,7 @@ class Cluster {
 public:
     explicit Cluster(int id, Point centroid);
 
-    void addPoint(Point *point);
+    void addPoint(Point point);
     void updateCentroid();
 
     int id;

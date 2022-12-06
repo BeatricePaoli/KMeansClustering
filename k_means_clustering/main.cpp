@@ -7,9 +7,9 @@ std::string datasetsDirectory = "./../datasets/";
 std::string clusteringResultsDirectory = "./../clustering_results/";
 
 int n = 1;
-int k = 4;
-int min_t = 8;
-int max_t_ex = 9;
+int k = 1000;
+int min_t = 1;
+int max_t_ex = 17;
 
 int main() {
 
@@ -22,7 +22,7 @@ int main() {
 
         std::vector<Cluster> clusters;
 
-        for (int t = min_t; t < max_t_ex; t++) {
+        for (int t = min_t; t < max_t_ex; t*=2) {
             omp_set_num_threads(t);
 
             double start = omp_get_wtime();

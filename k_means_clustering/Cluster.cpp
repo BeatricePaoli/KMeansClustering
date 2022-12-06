@@ -8,9 +8,12 @@ Cluster::Cluster(int idVal, Point centr) {
     this->size = 0;
 }
 
-void Cluster::addPoint(Point *point) {
-    this->tempSumX += point->x;
-    this->tempSumY += point->y;
+void Cluster::addPoint(Point point) {
+#pragma omp atomic
+    this->tempSumX += point.x;
+#pragma omp atomic
+    this->tempSumY += point.y;
+#pragma omp atomic
     this->size++;
 }
 
