@@ -81,15 +81,20 @@ Clusters randomInit(int k, Points &points) {
     clusters.centroidY.reserve(k);
     clusters.id.reserve(k);
     clusters.clusterSize.reserve(k);
+    clusters.centroidXTemp.reserve(k);
+    clusters.centroidYTemp.reserve(k);
 
-    std::random_device rd;
-    srand(rd());
+//    std::random_device rd;
+//    srand(rd());
+    srand(0);
     for (int i = 0; i < k; i++) {
         int j = rand() % points.size;
         clusters.centroidX.push_back(points.x[j]);
         clusters.centroidY.push_back(points.y[j]);
         clusters.id.push_back(i);
         clusters.clusterSize.push_back(0);
+        clusters.centroidXTemp.push_back(0);
+        clusters.centroidYTemp.push_back(0);
     }
 
     return clusters;
@@ -104,59 +109,54 @@ Clusters kMeansClustering(int k, Points &points, int maxIters) {
     Clusters clusters = randomInit(k, points);
 
     int iter = 0;
-    bool updateStopped;
+//    bool updateStopped;
 
     do {
 
         iter++;
 
         // Reset flag
-        updateStopped = true;
+//        updateStopped = true;
 
-#pragma omp parallel default(none) shared(updateStopped, points, clusters)
-        {
-            // Assignment
-#pragma omp for
-            for (int i = 0; i < points.size; i++) {
-                float currentMinDist = std::numeric_limits<float>::max();
-                int currentMinClusterId = -1;
+        // Assignment
+#pragma omp parallel for default(none) shared(points, clusters)
+        for (int i = 0; i < points.size; i++) {
+            float currentMinDist = std::numeric_limits<float>::max();
+            int currentMinClusterId = -1;
 
-                for (int j = 0; j < clusters.size; j++) {
-                    float dist = distance(points.x[i], points.y[i], clusters.centroidX[j], clusters.centroidY[j]);
-                    if (dist < currentMinDist) {
-                        currentMinDist = dist;
-                        currentMinClusterId = clusters.id[j];
-                    }
-                }
-
-                if (points.clusterId[i] != currentMinClusterId) {
-                    points.clusterId[i] = currentMinClusterId;
-                    updateStopped = false;
+            for (int j = 0; j < clusters.size; j++) {
+                float dist = distance(points.x[i], points.y[i], clusters.centroidX[j], clusters.centroidY[j]);
+                if (dist < currentMinDist) {
+                    currentMinDist = dist;
+                    currentMinClusterId = clusters.id[j];
                 }
             }
 
-            // Update
-#pragma omp for
-            for (int i = 0; i < clusters.size; i++) {
-                clusters.centroidX[i] = 0;
-                clusters.centroidY[i] = 0;
-                clusters.clusterSize[i] = 0;
-
-                for (int j = 0; j < points.size; j++) {
-                    if (points.clusterId[j] == clusters.id[i]) {
-                        clusters.centroidX[i] += points.x[j];
-                        clusters.centroidY[i] += points.y[j];
-                        clusters.clusterSize[i]++;
-                    }
-                }
-
-                clusters.centroidX[i] /= clusters.clusterSize[i];
-                clusters.centroidY[i] /= clusters.clusterSize[i];
+            if (points.clusterId[i] != currentMinClusterId) {
+                points.clusterId[i] = currentMinClusterId;
+//                    updateStopped = false;
             }
 
+#pragma omp atomic
+            clusters.centroidXTemp[currentMinClusterId] += points.x[i];
+#pragma omp atomic
+            clusters.centroidYTemp[currentMinClusterId] += points.y[i];
+#pragma omp atomic
+            clusters.clusterSize[currentMinClusterId]++;
         }
 
-    } while (!updateStopped && iter < maxIters);
+        // Update
+        for (int i = 0; i < clusters.size; i++) {
+            clusters.centroidX[i] = clusters.centroidXTemp[i] / clusters.clusterSize[i];
+            clusters.centroidY[i] = clusters.centroidYTemp[i] / clusters.clusterSize[i];
+
+            clusters.centroidXTemp[i] = 0;
+            clusters.centroidYTemp[i] = 0;
+            clusters.clusterSize[i] = 0;
+        }
+
+
+    } while (iter < maxIters); // !updateStopped &&
 
     return clusters;
 }

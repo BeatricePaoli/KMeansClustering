@@ -9,6 +9,8 @@ struct Clusters {
     std::vector<float> centroidY;
     std::vector<int> id;
     std::vector<int> clusterSize;
+    std::vector<float> centroidXTemp;
+    std::vector<float> centroidYTemp;
 };
 
 
