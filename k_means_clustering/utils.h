@@ -4,14 +4,10 @@
 #include <string>
 #include <vector>
 #include "Cluster.h"
-#include "Points.h"
 
 std::vector<std::string> getDatasetFilenames(const std::string& datasetsDirectory);
 
 std::vector<Point> readPointsFromCsv(const std::string& filename, char delimiter);
 void writePointsToCsv(const std::vector<Point> &points, const std::string &filename, char delimiter);
-
-Points readPointsStructFromCsv(const std::string& filename, char delimiter);
-void writePointsStructToCsv(const Points &points, const std::string &filename, char delimiter);
 
 #endif //K_MEANS_CLUSTERING_UTILS_H
