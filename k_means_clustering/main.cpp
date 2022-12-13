@@ -21,6 +21,7 @@ int main() {
         std::cout << "Reading csv finished" << std::endl;
 
         std::vector<Cluster> clusters;
+        std::vector<std::pair<int, double>> threadTimes;
 
         for (int t = min_t; t < max_t_ex; t*=2) {
             omp_set_num_threads(t);
@@ -31,8 +32,15 @@ int main() {
             }
             double end = omp_get_wtime();
             double time = (end - start) / n;
+            threadTimes.emplace_back(t, time);
             std::cout << "Total time for file " << filename << ": " << time << " s with " << t << " threads and " << clusters.size() << " clusters" << std::endl;
         }
+
+        std::cout << "Thread-Times: ";
+        for (auto tt : threadTimes) {
+            std::cout << "(" << tt.first << ", " << tt.second << "), ";
+        }
+        std::cout << std::endl;
 
 //        writePointsToCsv(points, clusteringResultsDirectory + filename, ',');
     }
