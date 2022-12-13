@@ -24,8 +24,6 @@ def read_from_csv_and_plot(path: str, delimiter: str) -> None:
     points = np.genfromtxt(fname=path, delimiter=delimiter)
     plt.clf()
     plt.scatter(points[:, 0], points[:, 1], c=points[:, 2])
-    if points.shape[1] > 3:
-        plt.scatter(points[:, 3], points[:, 4], c='r', marker='v')
     plt.savefig(f'{path[:-4]}.png')
 
 
