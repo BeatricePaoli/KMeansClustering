@@ -51,13 +51,38 @@ if __name__ == '__main__':
     points4 = np.array([(1, 0.213202), (2, 0.193648), (4, 0.173003), (8, 0.149905), (16, 0.202764)])
     points4[:, 1] = points4[0, 1] / points4[:, 1]
 
+    # n 300000, k 1000
+    points5 = np.array([(1, 38.0451), (2, 24.1223), (4, 17.1518), (8, 14.3151), (16, 14.8239)])
+    points5[:, 1] = points5[0, 1] / points5[:, 1]
+
+    # n 500000, k 1000
+    points6 = np.array([(1, 63.6955), (2, 45.3753), (4, 35.9615), (8, 32.5771), (16, 32.7053)])
+    points6[:, 1] = points6[0, 1] / points6[:, 1]
+
+    # n 10000, k 1000
+    points7 = np.array([(1, 1.29328), (2, 0.826481), (4, 0.661387), (8, 0.512111), (16, 0.496959)])
+    points7[:, 1] = points7[0, 1] / points7[:, 1]
+
+    # n 5000, k 1000
+    points8 = np.array([(1, 0.609926), (2, 0.449107), (4, 0.346811), (8, 0.248962), (16, 0.241643)])
+    points8[:, 1] = points8[0, 1] / points8[:, 1]
+
     plt.xlabel('Threads')
     plt.ylabel('Speedup')
     plt.axis([1, 17, 1, 4])
-    plt.title('Speedup with different K')
-    plt.plot(points4[:, 0], points4[:, 1], color='m', label='K = 10')
-    plt.plot(points2[:, 0], points2[:, 1], color='b', label='K = 100')
-    plt.plot(points[:, 0], points[:, 1], color='r', label='K = 1000')
-    plt.plot(points3[:, 0], points3[:, 1], color='g', label='K = 10000')
+
+    # plt.title('Speedup with different K')
+    # plt.plot(points4[:, 0], points4[:, 1], color='m', label='K = 10')
+    # plt.plot(points2[:, 0], points2[:, 1], color='b', label='K = 100')
+    # plt.plot(points[:, 0], points[:, 1], color='r', label='K = 1000')
+    # plt.plot(points3[:, 0], points3[:, 1], color='g', label='K = 10000')
+
+    plt.title('Speedup with different N')
+    plt.plot(points8[:, 0], points8[:, 1], color='c', label='N = 5000')
+    plt.plot(points7[:, 0], points7[:, 1], color='m', label='N = 10000')
+    plt.plot(points[:, 0], points[:, 1], color='r', label='N = 100000')
+    plt.plot(points5[:, 0], points5[:, 1], color='g', label='N = 300000')
+    plt.plot(points6[:, 0], points6[:, 1], color='b', label='N = 500000')
+
     plt.legend()
     plt.savefig('speedup.png')
