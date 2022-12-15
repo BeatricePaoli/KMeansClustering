@@ -110,7 +110,7 @@ The update step is limited to a simple \textit{for} cycle over the clusters to c
 To achieve parallelization it was necessary to use only a few parallel directives.
 
 The assignment step is embarrassingly parallel since the search and assignment of each point to a cluster is independent from one another.
-So a \verb"#pragma omp for" statement was used on the points loop to use threads to parallelize the computation.
+So a \verb"#pragma omp parallel for" statement was used on the points loop to use threads to parallelize the computation.
 
 \begin{algorithm}
 	\label{alg:KMeansAlgParallel}
@@ -121,7 +121,7 @@ So a \verb"#pragma omp for" statement was used on the points loop to use threads
 		
 		\State Select K points as initial centroids of the clusters
 		\While{Centroids keep changing}
-		\State \textcolor{orange}{\#pragma omp for}
+		\State \textcolor{orange}{\#pragma omp parallel for}
 		\For{each point $p$}
 		\State Assign $p$ to the cluster with the closest centroid
 		\EndFor
