@@ -140,6 +140,8 @@ However, each thread accesses the shared clusters to call \textit{addPoint()} an
 
 The method \textit{addPoint()} only performs three sums over the variables \textit{tempSumX}, \textit{tempSumY} and \textit{size}, so three \verb"#pragma omp atomic" were used to ensure the correct update of the variables and avoid the race condition.
 
+The update step, as stated before, is limited to a simple \textit{for} loop over the clusters to update each centroid by performing only two divisions. This step is also embarrassingly parallel but the computations performed inside the loop are far too simple and the number of clusters is much smaller compared to the number of points. For these reasons it would be counter-productive to paralleliza this step, as the overhead of thread management would decrease the performance of the algorithm.
+
 \section{Performance Analysis}
 In order to compare the performance of a sequential algorithm with its parallel version we can use the concept of \textit{speedup}.
 
@@ -149,7 +151,7 @@ Speedup is measured as the ratio between the execution time of the sequential al
 
 Ideally, we should look for \textit{perfect speedup} or even \textit{linear speedup}, meaning $S$ should be equal or similar to the number of processors used to perform the parallel algorithm.
 
-The experiments were performed on a Quad-Core machine with 2D input datasets generated with \textit{scikit-learn} in Python.
+The experiments were performed on a Intel Core i7-1165G7 with 8 logical cores, with 2D input datasets generated with \textit{scikit-learn} in Python.
 
 Since the algorithm has the hyperparameter $K$ for the number of clusters, different experiments were performed with varying $K$ and fixed $N$ (number of points), and viceversa.
 
@@ -159,27 +161,29 @@ Since the algorithm has the hyperparameter $K$ for the number of clusters, diffe
 	\label{fig:speedup_k}
 \end{figure}
 
-...
+In Figure \ref{fig:speedup_k} we have the different speedups for different numbers of threads used and different values of $K$. We can see how the speedup increases up to 8 threads as expected, but in a sub-linear way.
+The results also depend on the value of $K$ chosen. 
+
+For small $K$, the speedup are significantly worse and deteriorate almost to 1 for a high number of threads. Since the work of each thread consists mainly on computing all the distances between a point and all centroids to find the closest cluster, so for small numbers of $K$ the computation of each thread can become too little and the gain in speedup is lost due to thread management.
+
 
 \begin{table}
 \begin{center}
-\begin{tabular}{|c|c|}
+\begin{tabular}{|c|c|c|}
 \hline
-Threads & Execution Time \\
+Threads & Execution Time & Speedup \\
 \hline
-1 & 12.1057 \\ 
-2 & 7.8597 \\
-4 & 5.25893 \\
-8 & 4.33545 \\ 
-16 & 4.49782 \\
+1 & 12.106 & 1 \\ 
+2 & 7.860 & 1.540 \\
+4 & 5.259 & 2.302 \\
+8 & 4.335 & 2.792 \\ 
+16 & 4.498 & 2.691 \\
 \hline
 \end{tabular}
 \end{center}
 \caption{Execution Times for K = 1000 and N = 100000.}
+\label{tab:speedup_k_n}
 \end{table}
-
-...
-
 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{images/speedup_by_n.png}
@@ -187,7 +191,7 @@ Threads & Execution Time \\
 	\label{fig:speedup_n}
 \end{figure}
 
-...
+In Figure \ref{fig:speedup_n} we have the speedup trends for different sizes $N$ of datasets. As before, the values increase up to 8 in a sub-linear way.
 
 
 \end{document}
