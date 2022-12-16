@@ -21,7 +21,7 @@ std::vector<Cluster> kMeansClustering(int k, std::vector<Point> &points, int max
     std::vector<Cluster> clusters = randomInit(k, points);
 
     int iter = 0;
-//    bool updateStopped;
+    bool updateStopped;
 
     const int pointsSize = points.size();
     const int clusterSize = clusters.size();
@@ -30,9 +30,9 @@ std::vector<Cluster> kMeansClustering(int k, std::vector<Point> &points, int max
 
         iter++;
         // Reset flag
-//        updateStopped = true;
+        updateStopped = true;
 
-#pragma omp parallel for default(none) firstprivate(pointsSize, clusterSize) shared(points, clusters)
+#pragma omp parallel for default(none) firstprivate(pointsSize, clusterSize) shared(updateStopped, points, clusters)
         for (int i = 0; i < pointsSize; i++) {
             Point *point = &points[i];
 
@@ -51,7 +51,7 @@ std::vector<Cluster> kMeansClustering(int k, std::vector<Point> &points, int max
 
             if (point->clusterId != currentMinClusterId) {
                 point->clusterId = currentMinClusterId;
-//                    updateStopped = false;
+                    updateStopped = false;
             }
 
             clusters[currentMinClusterId].addPoint(*point);
@@ -64,7 +64,7 @@ std::vector<Cluster> kMeansClustering(int k, std::vector<Point> &points, int max
         }
 
 
-    } while (iter < maxIters); // !updateStopped &&
+    } while (!updateStopped && iter < maxIters);
 
     return clusters;
 }
