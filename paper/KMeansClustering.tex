@@ -74,7 +74,7 @@ The algorithm is composed by few steps, with two main phases alternated between 
 	\end{algorithmic}
 \end{algorithm}
 
-The algorithm converges after few steps to a local minimum, depending on the choice of the initial centroids. In the implementation presented in this paper, the starting centroids are chosen randomly from the dataset in input. Therefor, different runs of the algorithm on the same dataset and the same number of centroids can yield different results. Other initialization methods can be used to obtain the gloabl optimum more consistently.
+The algorithm converges after few steps to a local minimum, depending on the choice of the initial centroids. In the implementation presented in this paper, the starting centroids are chosen randomly from the dataset in input. Therefore, different runs of the algorithm on the same dataset and the same number of centroids can yield different results. Other initialization methods can be used to obtain the gloabl optimum more consistently.
 
 %-------------------------------------------------------------------------
 
@@ -101,10 +101,13 @@ The function \textit{kMeansClustering()} accepts three parameters: an integer \t
 
 The function starts by performing a random initialization of the clusters by choosing $k$ points as initial centroids.
 
-In a \textit{for} cycle bounded by the number of iterations to perform, the function alternates the assignment and update steps.
+In a \textit{do-while} cycle bounded by the number of iterations to perform and a boolean \textit{updateStopped}, the function alternates the assignment and update steps.
 In the assignment step, for each point we find the cluster with the closest centroid and then update the point's \textit{clusterId} and call the cluster's method \textit{addPoint()} to update the partial sums of the future centroid.
+If the point's \textit{clusterId} was updated the \textit{updateStopped} is set to \textit{false}.
 
 The update step is limited to a simple \textit{for} cycle over the clusters to call \textit{updateCetroid()} to update all the centroids with the current points assignment. 
+
+If the \textit{updateStopped} flag is set to \textit{false} (i.e. at least one point changed assignment) and the number of iterations performed is less than the maximum, then another iteration of assignment-update is executed and the flag is set to \textit{true}. Otherwise the algorithm stops and the clusters are returned.
 
 \subsection{OpenMP Parallelization}
 To achieve parallelization it was necessary to use only a few parallel directives.
