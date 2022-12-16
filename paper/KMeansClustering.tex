@@ -247,6 +247,78 @@ For small $K$, the speedup are significantly worse and deteriorate almost to 1 f
 	\label{fig:speedup_n}
 \end{figure}
 
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|c|c|c|}
+			\hline
+			Threads & Execution Time (s) & Speedup \\
+			\hline
+			1 & 0.610 & 1 \\ 
+			2 & 0.449 & 1.358 \\
+			4 & 0.347 & 1.759 \\
+			8 & 0.249 & 2.450 \\ 
+			16 & 0.242 & 2.524 \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption{Execution Times for K = 1000 and N = 5000.}
+	\label{tab:speedup_k_n_5}
+\end{table}
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|c|c|c|}
+			\hline
+			Threads & Execution Time (s) & Speedup \\
+			\hline
+			1 & 1.293 & 1 \\ 
+			2 & 0.827 & 1.565 \\
+			4 & 0.661 & 1.955 \\
+			8 & 0.512 & 2.525 \\ 
+			16 & 0.497 & 2.602 \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption{Execution Times for K = 1000 and N = 10000.}
+	\label{tab:speedup_k_n_6}
+\end{table}
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|c|c|c|}
+			\hline
+			Threads & Execution Time (s) & Speedup \\
+			\hline
+			1 & 38.045 & 1 \\ 
+			2 & 24.122 & 1.577 \\
+			4 & 17.152 & 2.218 \\
+			8 & 14.315 & 2.658 \\ 
+			16 & 14.824 & 2.567 \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption{Execution Times for K = 1000 and N = 300000.}
+	\label{tab:speedup_k_n_7}
+\end{table}
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|c|c|c|}
+			\hline
+			Threads & Execution Time (s) & Speedup \\
+			\hline
+			1 & 63.696 & 1 \\ 
+			2 & 45.375 & 1.404 \\
+			4 & 35.962 & 1.771 \\
+			8 & 32.577 & 1.955 \\ 
+			16 & 32.705 & 1.948 \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption{Execution Times for K = 1000 and N = 500000.}
+	\label{tab:speedup_k_n_8}
+\end{table}
+
 In Figure \ref{fig:speedup_n} we have the speedup trends for different sizes $N$ of datasets. As before, the values increase up to 8 in a sub-linear way.
 
 \end{document}
