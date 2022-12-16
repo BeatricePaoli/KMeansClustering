@@ -164,22 +164,21 @@ Since the algorithm has the hyperparameter $K$ for the number of clusters, diffe
 	\label{fig:speedup_k}
 \end{figure}
 
-
 \begin{table}[H]
 	\begin{center}
 		\begin{tabular}{|c|c|c|}
 			\hline
-			Threads & Execution Time & Speedup \\
+			Threads & Execution Time (s) & Speedup \\
 			\hline
-			1 & 12.106 & 1 \\ 
-			2 & 7.860 & 1.540 \\
-			4 & 5.259 & 2.302 \\
-			8 & 4.335 & 2.792 \\ 
-			16 & 4.498 & 2.691 \\
+			1 & 0.213 & 1 \\ 
+			2 & 0.194 & 1.101 \\
+			4 & 0.173 & 1.232 \\
+			8 & 0.150 & 1.422 \\ 
+			16 & 0.203 & 1.052 \\
 			\hline
 		\end{tabular}
 	\end{center}
-	\caption{Execution Times for K = 1000 and N = 100000.}
+	\caption{Execution Times for K = 10 and N = 100000.}
 	\label{tab:speedup_k_n_1}
 \end{table}
 
@@ -187,7 +186,7 @@ Since the algorithm has the hyperparameter $K$ for the number of clusters, diffe
 	\begin{center}
 		\begin{tabular}{|c|c|c|}
 			\hline
-			Threads & Execution Time & Speedup \\
+			Threads & Execution Time (s) & Speedup \\
 			\hline
 			1 & 1.458 & 1 \\ 
 			2 & 0.970 & 1.504 \\
@@ -199,6 +198,42 @@ Since the algorithm has the hyperparameter $K$ for the number of clusters, diffe
 	\end{center}
 	\caption{Execution Times for K = 100 and N = 100000.}
 	\label{tab:speedup_k_n_2}
+\end{table}
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|c|c|c|}
+			\hline
+			Threads & Execution Time (s) & Speedup \\
+			\hline
+			1 & 12.106 & 1 \\ 
+			2 & 7.860 & 1.540 \\
+			4 & 5.259 & 2.302 \\
+			8 & 4.335 & 2.792 \\ 
+			16 & 4.498 & 2.691 \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption{Execution Times for K = 1000 and N = 100000.}
+	\label{tab:speedup_k_n_3}
+\end{table}
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|c|c|c|}
+			\hline
+			Threads & Execution Time (s) & Speedup \\
+			\hline
+			1 & 126.525 & 1 \\ 
+			2 & 85.591 & 1.478 \\
+			4 & 69.055 & 1.832 \\
+			8 & 65.570 & 1.930 \\ 
+			16 & 68.286 & 1.853 \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption{Execution Times for K = 10000 and N = 100000.}
+	\label{tab:speedup_k_n_4}
 \end{table}
 
 In Figure \ref{fig:speedup_k} we have the different speedups for different numbers of threads used and different values of $K$. We can see how the speedup increases up to 8 threads as expected, but in a sub-linear way.
