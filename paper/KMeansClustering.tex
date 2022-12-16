@@ -164,29 +164,47 @@ Since the algorithm has the hyperparameter $K$ for the number of clusters, diffe
 	\label{fig:speedup_k}
 \end{figure}
 
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|c|c|c|}
+			\hline
+			Threads & Execution Time & Speedup \\
+			\hline
+			1 & 12.106 & 1 \\ 
+			2 & 7.860 & 1.540 \\
+			4 & 5.259 & 2.302 \\
+			8 & 4.335 & 2.792 \\ 
+			16 & 4.498 & 2.691 \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption{Execution Times for K = 1000 and N = 100000.}
+	\label{tab:speedup_k_n_1}
+\end{table}
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{|c|c|c|}
+			\hline
+			Threads & Execution Time & Speedup \\
+			\hline
+			1 & 1.458 & 1 \\ 
+			2 & 0.970 & 1.504 \\
+			4 & 0.704 & 2.071 \\
+			8 & 0.473 & 3.082 \\ 
+			16 & 0.498 & 2.929 \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption{Execution Times for K = 100 and N = 100000.}
+	\label{tab:speedup_k_n_2}
+\end{table}
+
 In Figure \ref{fig:speedup_k} we have the different speedups for different numbers of threads used and different values of $K$. We can see how the speedup increases up to 8 threads as expected, but in a sub-linear way.
 The results also depend on the value of $K$ chosen. 
 
 For small $K$, the speedup are significantly worse and deteriorate almost to 1 for a high number of threads. Since the work of each thread consists mainly on computing all the distances between a point and all centroids to find the closest cluster, so for small numbers of $K$ the computation of each thread can become too little and the gain in speedup is lost due to thread management.
-
-
-\begin{table}
-\begin{center}
-\begin{tabular}{|c|c|c|}
-\hline
-Threads & Execution Time & Speedup \\
-\hline
-1 & 12.106 & 1 \\ 
-2 & 7.860 & 1.540 \\
-4 & 5.259 & 2.302 \\
-8 & 4.335 & 2.792 \\ 
-16 & 4.498 & 2.691 \\
-\hline
-\end{tabular}
-\end{center}
-\caption{Execution Times for K = 1000 and N = 100000.}
-\label{tab:speedup_k_n}
-\end{table}
 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{images/speedup_by_n.png}
@@ -195,6 +213,5 @@ Threads & Execution Time & Speedup \\
 \end{figure}
 
 In Figure \ref{fig:speedup_n} we have the speedup trends for different sizes $N$ of datasets. As before, the values increase up to 8 in a sub-linear way.
-
 
 \end{document}
