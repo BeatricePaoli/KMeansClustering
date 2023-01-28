@@ -20,10 +20,4 @@ Parallelization is obtained with a single `#pragma omp parallel for` over the as
 
 ## Speedup Results
 
-Speedup results with a fixed number of points and varying number of centroids.
-
-![speedup_k](paper/images/speedup_by_k.png)
-
-Speedup results with a fixed number of centroids and varying number of points.
-
-![speedup_n](paper/images/speedup_by_n.png)
+![speedup](readme_images/speedup.png)
