@@ -51,7 +51,7 @@ The K-means algorithm is a parametrized clustering technique that allows to part
 
 Many metrics of distances can be used depending on the dataset to cluster, for this implementation the dataset is comprised of 2D points and distances are measured with the Euclidean distance.
 
-The algorithm is composed by few steps, with two main phases alternated between each other: the \textit{Assignment} phase and the \textit{Update} phase. %\ref{alg:KMeansAlg}
+The algorithm is composed by few steps, with two main phases alternated between each other: the \textit{Assignment} phase and the \textit{Update} phase.
 
 \begin{algorithm}
 	\label{alg:KMeansAlg}
@@ -74,7 +74,7 @@ The algorithm is composed by few steps, with two main phases alternated between 
 	\end{algorithmic}
 \end{algorithm}
 
-The algorithm converges after few steps to a local minimum, depending on the choice of the initial centroids. In the implementation presented in this paper, the starting centroids are chosen randomly from the dataset in input. Therefore, different runs of the algorithm on the same dataset and the same number of centroids can yield different results. Other initialization methods can be used to obtain the gloabl optimum more consistently.
+The algorithm converges after few steps to a local minimum, depending on the choice of the initial centroids. In the implementation presented in this paper, the starting centroids are chosen randomly from the dataset in input. Therefore, different runs of the algorithm on the same dataset and the same number of centroids can yield different results. Other initialization methods can be used to obtain the global optimum more consistently.
 
 %-------------------------------------------------------------------------
 
