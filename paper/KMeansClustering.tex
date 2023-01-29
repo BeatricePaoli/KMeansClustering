@@ -92,7 +92,7 @@ The details of the implementations of the function \textit{kMeansClustering()} a
 	Aside from the constructor, the class has two main methods:
 	\begin{itemize}
 		\item \textit{addPoint()}: is used during the Assignment phase; it adds a point to the cluster by increasing the \textit{size} counter and by adding its coordinates to the partial sums.
-		\item \textit{updateCentroid()}: is used during the Update phase; it computes the new mean of the cluster by using the sums of the coordinates computed before and the size of the cluster. After the update, \textit{tempSumX}, \textit{tempSumY} and \textit{size} are resetted to 0, ready for a new iteration of the algorithm.
+		\item \textit{updateCentroid()}: is used during the Update phase; it computes the new mean of the cluster by using the sums of the coordinates computed before and the size of the cluster. After the update, \textit{tempSumX}, \textit{tempSumY} and \textit{size} are reset to 0, ready for a new iteration of the algorithm.
 	\end{itemize}
 \end{itemize}
 
@@ -107,7 +107,7 @@ If the point's \textit{clusterId} was updated the \textit{updateStopped} is set 
 
 The update step is limited to a simple \textit{for} cycle over the clusters to call \textit{updateCetroid()} to update all the centroids with the current points assignment. 
 
-If the \textit{updateStopped} flag is set to \textit{false} (i.e. at least one point changed assignment) and the number of iterations performed is less than the maximum, then another iteration of assignment-update is executed and the flag is set to \textit{true}. Otherwise the algorithm stops and the clusters are returned.
+If the \textit{updateStopped} flag is set to \textit{false} (i.e. at least one point changed assignment) and the number of iterations performed is less than the maximum, then another iteration of assignment-update cycle is executed and the flag is set to \textit{true}. Otherwise the algorithm stops and the clusters are returned.
 
 \subsection{OpenMP Parallelization}
 To achieve parallelization it was necessary to use only a few parallel directives.
@@ -137,13 +137,13 @@ So a \verb"#pragma omp parallel for" statement was used on the points loop to us
 	\end{algorithmic}
 \end{algorithm}
 
-Since the workload for each thread is similar the default static scheduler is used.
+Since the workload for each thread is similar, the default static scheduler is used.
 
-However, each thread accesses the shared clusters to call \textit{addPoint()} and update the internal cluster variable. Without any synchronization mechanism, this introduces a race condition on the algorithm that leads to incorrect results.
+However, each thread accesses the shared clusters to call \textit{addPoint()} and update the internal cluster variables. Without any synchronization mechanism, this introduces a race condition on the algorithm that leads to incorrect results.
 
 The method \textit{addPoint()} only performs three sums over the variables \textit{tempSumX}, \textit{tempSumY} and \textit{size}, so three \verb"#pragma omp atomic" were used to ensure the correct update of the variables and avoid the race condition.
 
-The update step, as stated before, is limited to a simple \textit{for} loop over the clusters to update each centroid by performing only two divisions. This step is also embarrassingly parallel but the computations performed inside the loop are far too simple and the number of clusters is much smaller compared to the number of points. For these reasons it would be counter-productive to paralleliza this step, as the overhead of thread management would decrease the performance of the algorithm.
+The update step, as stated before, is limited to a simple \textit{for} loop over the clusters to update each centroid by performing only two divisions. This step is also embarrassingly parallel but the computations performed inside the loop are far too simple and the number of clusters is much smaller compared to the number of points. For these reasons it would be counter-productive to parallelize this step, as the overhead of thread management would decrease the performance of the algorithm.
 
 \section{Performance Analysis}
 In order to compare the performance of a sequential algorithm with its parallel version we can use the concept of \textit{speedup}.
@@ -160,7 +160,7 @@ Since the algorithm has the hyperparameter $K$ for the number of clusters, diffe
 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{images/speedup_by_k.png}
-	\caption{Speedup K Means Clustering con N = 100000.}
+	\caption{Speedup K Means Clustering with N = 100000.}
 	\label{fig:speedup_k}
 \end{figure}
 
@@ -239,11 +239,11 @@ Since the algorithm has the hyperparameter $K$ for the number of clusters, diffe
 In Figure \ref{fig:speedup_k} we have the different speedups for different numbers of threads used and different values of $K$. We can see how the speedup increases up to 8 threads as expected, but in a sub-linear way.
 The results also depend on the value of $K$ chosen. 
 
-For small $K$, the speedup are significantly worse and deteriorate almost to 1 for a high number of threads. Since the work of each thread consists mainly on computing all the distances between a point and all centroids to find the closest cluster, so for small numbers of $K$ the computation of each thread can become too little and the gain in speedup is lost due to thread management.
+For small $K$, the speedup are significantly worse and deteriorate almost to 1 for a high number of threads. Since the work of each thread consists mainly on computing all the distances between a point and all centroids to find the closest cluster, then for small numbers of $K$ the computation of each thread can become too little and the gain in speedup is lost due to thread management.
 
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{images/speedup_by_n.png}
-	\caption{Speedup K Means Clustering con K = 1000.}
+	\caption{Speedup K Means Clustering with K = 1000.}
 	\label{fig:speedup_n}
 \end{figure}
 
